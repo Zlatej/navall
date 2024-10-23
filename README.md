@@ -1,5 +1,5 @@
-# NAME
-NAME is a ledger for your group expenses. Simply add your expenses to the group, track your balance. And when you want to settle up the debts, NAME will suggest you the payments.
+# Navall
+Navall is a ledger for your group expenses. Simply add your expenses to the group, track your balance. And when you want to settle up the debts, Navall will suggest you the payments.
 
 ## Business operations
 ### Create
