@@ -14,7 +14,7 @@ Navall is a ledger for your group expenses. Simply add your expenses to the grou
 - **Transactions**: Edit participants, transaction amounts, and add or remove participants
 
 ## Database Diagram
-![DatabaseScheme](database.png)
+![DatabaseScheme](assets/database.png)
 
 ## Complex query
 **Calculate settlement suggestions**: Generate suggested transactions from Members with negative balance to Members with positive balance.
