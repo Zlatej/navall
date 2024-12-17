@@ -13,6 +13,6 @@ data class Group(
     @Column(name = "currency")
     val currency: String,
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL])
     val members: List<Member>,
 )

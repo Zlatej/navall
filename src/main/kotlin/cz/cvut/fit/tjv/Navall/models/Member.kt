@@ -24,5 +24,8 @@ data class Member(
     val group: Group,
 
     @OneToMany(mappedBy = "payed_by")
-    val transactions: List<Transaction> = emptyList()
+    val transactions: List<Transaction> = emptyList(),
+
+    @OneToMany(mappedBy = "participant")
+    val participatedIn: List<TransactionParticipant> = emptyList(),
 )
