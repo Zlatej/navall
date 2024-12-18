@@ -6,7 +6,7 @@ import jakarta.persistence.*
 @Table(name = "groups")
 data class Group(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "group_id")
     val id: Long,
 

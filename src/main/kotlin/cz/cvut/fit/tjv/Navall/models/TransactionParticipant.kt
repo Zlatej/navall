@@ -6,7 +6,7 @@ import jakarta.persistence.*
 @Table(name = "transaction_participants")
 data class TransactionParticipant(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "transaction_participant_id")
     val id: Long,
 

@@ -6,7 +6,7 @@ import jakarta.persistence.*
 @Table(name = "members")
 data class Member(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "member_id")
     val id: Long,
 
@@ -23,7 +23,7 @@ data class Member(
     @JoinColumn(name = "group")
     val group: Group,
 
-    @OneToMany(mappedBy = "payed_by")
+    @OneToMany(mappedBy = "paidBy")
     val transactions: List<Transaction> = emptyList(),
 
     @OneToMany(mappedBy = "participant")

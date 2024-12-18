@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 @Table(name = "transactions")
 data class Transaction(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "transaction_id")
     val id: Long,
 
@@ -18,8 +18,8 @@ data class Transaction(
     val amount: Double,
 
     @ManyToOne
-    @JoinColumn(name = "payed_by")
-    val payedBy: Member,
+    @JoinColumn(name = "paid_by")
+    val paidBy: Member,
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime,
