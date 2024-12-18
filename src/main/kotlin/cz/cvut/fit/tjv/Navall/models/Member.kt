@@ -20,7 +20,7 @@ data class Member(
     val email: String? = null,
 
     @ManyToOne
-    @JoinColumn(name = "group")
+    @JoinColumn(name = "group_id")
     val group: Group,
 
     @OneToMany(mappedBy = "paidBy")

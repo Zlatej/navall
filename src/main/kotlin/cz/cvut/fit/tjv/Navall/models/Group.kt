@@ -14,5 +14,5 @@ data class Group(
     val currency: String,
 
     @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL])
-    val members: List<Member>,
+    val members: Set<Member>,
 )
