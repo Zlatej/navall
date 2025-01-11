@@ -10,6 +10,9 @@ data class Group(
     @Column(name = "group_id")
     val id: Long,
 
+    @Column(name = "group_name")
+    val name: String,
+
     @Column(name = "currency")
     val currency: String,
 
