@@ -8,14 +8,14 @@ data class Group(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "group_id")
-    val id: Long,
+    val id: Long? = null,
 
-    @Column(name = "group_name")
+    @Column(name = "group_name", nullable = false)
     val name: String,
 
-    @Column(name = "currency")
+    @Column(name = "currency", nullable = false)
     val currency: String,
 
-    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL])
-    val members: Set<Member>,
+    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val members: Set<Member> = emptySet(),
 )
