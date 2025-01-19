@@ -8,16 +8,16 @@ data class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "member_id")
-    val id: Long,
+    val id: Long? = null,
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     val name: String,
 
     @Column(name = "balance")
-    val balance: Double,
+    val balance: Double = 0.0,
 
-    @Column(name = "email", unique = true, nullable = true)
-    val email: String? = null,
+    @Column(name = "email", unique = true, nullable = false)
+    val email: String,
 
     @ManyToOne
     @JoinColumn(name = "group_id")
