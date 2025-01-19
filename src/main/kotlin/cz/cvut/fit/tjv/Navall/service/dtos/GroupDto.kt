@@ -7,5 +7,5 @@ data class GroupDto(
     @field:NotBlank(message = "Name is required")
     var name: String,
     @field:NotBlank(message = "Currency is required")
-    var currency : String,
+    var currency: String,
 )
