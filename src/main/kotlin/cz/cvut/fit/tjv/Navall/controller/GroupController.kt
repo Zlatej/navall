@@ -13,34 +13,24 @@ class GroupController(
     private val groupService: GroupService,
 ) {
     @GetMapping
-    fun getAllGroups(): ResponseEntity<List<GroupDto>> {
-        return ResponseEntity.ok(groupService.getAllGroups().map { it.toDto() })
-    }
+    fun getAllGroups(): ResponseEntity<List<GroupDto>> =
+        ResponseEntity.ok(groupService.getAllGroups().map { it.toDto() })
 
     @GetMapping("/{id}")
-    fun getGroup(@PathVariable id: Long): ResponseEntity<GroupDto> {
-        val group = groupService.getGroupById(id) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(group.toDto())
-    }
+    fun getGroup(@PathVariable id: Long): ResponseEntity<GroupDto> =
+        ResponseEntity.ok(groupService.getGroupById(id).toDto())
 
     @PostMapping
-    fun createGroup(@RequestBody group: GroupDto): ResponseEntity<GroupDto> {
-        val savedGroup = groupService.createGroup(group.toEntity())
-        return ResponseEntity.status(201).body(savedGroup.toDto())
-    }
+    fun createGroup(@RequestBody group: GroupDto): ResponseEntity<GroupDto> =
+        ResponseEntity.status(201).body(groupService.createGroup(group.toEntity()).toDto())
 
     @PutMapping("/{id}")
-    fun updateGroup(@PathVariable id: Long, @RequestBody group: GroupDto): ResponseEntity<GroupDto> {
-        if (id != group.id) {
-            return ResponseEntity.badRequest().build()
-        }
-        val updatedGroup = groupService.updateGroup(id, group) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(updatedGroup.toDto())
-    }
+    fun updateGroup(@PathVariable id: Long, @RequestBody group: GroupDto): ResponseEntity<GroupDto> =
+        ResponseEntity.ok(groupService.updateGroup(id, group).toDto())
 
     @DeleteMapping("/{id}")
     fun deleteGroup(@PathVariable id: Long): ResponseEntity<Void> {
-        if (groupService.deleteGroup(id)) return ResponseEntity.ok().build()
-        return ResponseEntity.notFound().build()
+        groupService.deleteGroup(id)
+        return ResponseEntity.ok().build()
     }
 }

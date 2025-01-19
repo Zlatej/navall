@@ -3,7 +3,9 @@ package cz.cvut.fit.tjv.Navall.service
 import cz.cvut.fit.tjv.Navall.models.Group
 import cz.cvut.fit.tjv.Navall.repository.GroupRepo
 import cz.cvut.fit.tjv.Navall.service.dtos.GroupDto
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 
 @Service
 class GroupService(
@@ -11,12 +13,19 @@ class GroupService(
 ) {
     fun getAllGroups(): List<Group> = groupRepo.findAll()
 
-    fun getGroupById(id: Long) = groupRepo.findGroupById(id)
+    fun getGroupById(id: Long) = groupRepo.findGroupById(id) ?: throw ResponseStatusException(
+        HttpStatus.NOT_FOUND,
+        "Group with ID $id not found"
+    )
 
     fun createGroup(group: Group) = groupRepo.save(group)
 
-    fun updateGroup(id: Long, group: GroupDto): Group? {
-        val existingGroup = groupRepo.findGroupById(id) ?: return null
+    fun updateGroup(id: Long, group: GroupDto): Group {
+        if (id != group.id) throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Group IDs do not match")
+        val existingGroup = groupRepo.findGroupById(id) ?: throw ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Group with ID $id not found"
+        )
         val updatedGroup = existingGroup.copy(
             name = group.name,
             currency = group.currency
@@ -25,9 +34,11 @@ class GroupService(
         return updatedGroup
     }
 
-    fun deleteGroup(id: Long): Boolean {
-        if (!groupRepo.existsById(id)) return false
+    fun deleteGroup(id: Long) {
+        if (!groupRepo.existsById(id)) throw ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Group with ID $id not found"
+        )
         groupRepo.deleteById(id)
-        return true
     }
 }
