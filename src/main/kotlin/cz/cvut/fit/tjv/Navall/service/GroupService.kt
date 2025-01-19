@@ -3,7 +3,10 @@ package cz.cvut.fit.tjv.Navall.service
 import cz.cvut.fit.tjv.Navall.models.Group
 import cz.cvut.fit.tjv.Navall.repository.GroupRepo
 import cz.cvut.fit.tjv.Navall.service.dtos.GroupDto
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Service
+
+private val log = KotlinLogging.logger {}
 
 @Service
 class GroupService(
@@ -26,8 +29,8 @@ class GroupService(
     }
 
     fun deleteGroup(id: Long): Boolean {
-        val group = groupRepo.findGroupById(id) ?: return false
-        groupRepo.deleteGroupById(id)
+        if (!groupRepo.existsById(id)) return false
+        groupRepo.deleteById(id)
         return true
     }
 }

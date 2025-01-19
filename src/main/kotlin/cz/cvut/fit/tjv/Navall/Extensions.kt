@@ -22,5 +22,5 @@ fun Member.toDto() = MemberDto(
     name = this.name,
     balance = this.balance,
     email = this.email,
-    groupId = group.id
+    group = this.group.toDto(),
 )
