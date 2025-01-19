@@ -1,9 +1,7 @@
-package cz.cvut.fit.tjv.Navall
+package cz.cvut.fit.tjv.Navall.service.dtos
 
 import cz.cvut.fit.tjv.Navall.models.Group
 import cz.cvut.fit.tjv.Navall.models.Member
-import cz.cvut.fit.tjv.Navall.service.dtos.GroupDto
-import cz.cvut.fit.tjv.Navall.service.dtos.MemberDto
 
 fun Group.toDto() = GroupDto(
         id = this.id,

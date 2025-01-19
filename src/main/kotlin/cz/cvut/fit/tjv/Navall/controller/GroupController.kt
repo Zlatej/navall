@@ -2,8 +2,8 @@ package cz.cvut.fit.tjv.Navall.controller
 
 import cz.cvut.fit.tjv.Navall.service.GroupService
 import cz.cvut.fit.tjv.Navall.service.dtos.GroupDto
-import cz.cvut.fit.tjv.Navall.toDto
-import cz.cvut.fit.tjv.Navall.toEntity
+import cz.cvut.fit.tjv.Navall.service.dtos.toDto
+import cz.cvut.fit.tjv.Navall.service.dtos.toEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
