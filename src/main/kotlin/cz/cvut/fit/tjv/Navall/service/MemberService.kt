@@ -15,7 +15,12 @@ class MemberService(
 ) {
     fun getMembers(): List<Member> = memberRepo.findAll()
 
-    fun getMember(id: Long): Member = memberRepo.getMemberById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Member with ID $id not found")
+    fun getMembersOfGroup(id: Long): List<Member> = memberRepo.findAllByGroup_Id(id)
+
+    fun getMember(id: Long): Member = memberRepo.getMemberById(id) ?: throw ResponseStatusException(
+        HttpStatus.NOT_FOUND,
+        "Member with ID $id not found"
+    )
 
     fun getMemberByEmail(email: String) = memberRepo.getMemberByEmail(email) ?: throw ResponseStatusException(
         HttpStatus.NOT_FOUND,
@@ -51,6 +56,21 @@ class MemberService(
         )
         memberRepo.save(updatedMember)
         return updatedMember
+    }
+
+    fun increaseBalance(member: Member, change: Double) {
+        val updatedMember = member.copy(
+            balance = member.balance + change,
+        )
+        memberRepo.save(updatedMember)
+    }
+
+    fun decreaseBalance(member: Member, change: Double) {
+        val currentBalance = member.balance
+        val updatedMember = member.copy(
+            balance = member.balance - change,
+        )
+        memberRepo.save(updatedMember)
     }
 
     fun deleteMember(id: Long): Member {
