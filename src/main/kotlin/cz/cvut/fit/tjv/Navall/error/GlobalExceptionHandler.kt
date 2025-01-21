@@ -23,8 +23,7 @@ class GlobalExceptionHandler {
 
         if (e.statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {
             log.error(e) {}
-        }
-        else {
+        } else {
             log.warn(e) {}
         }
         return ResponseEntity(errorResponse, e.statusCode)
