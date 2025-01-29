@@ -10,25 +10,25 @@ data class Transaction(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "transaction_id")
-    val id: Long,
+    val id: Long? = null,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
-    val type: TransactionType,
+    @Column(name = "type", nullable = false)
+    val type: TransactionType = TransactionType.PAYMENT,
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     val amount: Double,
 
     @ManyToOne
-    @JoinColumn(name = "paid_by")
+    @JoinColumn(name = "paid_by", nullable = false)
     val paidBy: Member,
 
     @CreatedDate
-    @Column(name = "created_at")
-    val createdAt: LocalDateTime,
+    @Column(name = "created_at", nullable = false)
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(mappedBy = "transaction")
-    val participants: List<TransactionParticipant> = emptyList(),
+    var participants: MutableList<TransactionParticipant> = mutableListOf(),
 ) {
     enum class TransactionType(val type: String) {
         PAYMENT("payment"),

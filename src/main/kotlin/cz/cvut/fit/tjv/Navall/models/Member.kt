@@ -14,7 +14,7 @@ data class Member(
     val name: String,
 
     @Column(name = "balance")
-    val balance: Double = 0.0,
+    var balance: Double = 0.0,
 
     @Column(name = "email", unique = true, nullable = false)
     val email: String,

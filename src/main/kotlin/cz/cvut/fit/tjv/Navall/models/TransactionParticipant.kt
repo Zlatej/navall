@@ -8,7 +8,10 @@ data class TransactionParticipant(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "transaction_participant_id")
-    val id: Long,
+    val id: Long? = null,
+
+    @Column(name = "percentage")
+    val percentage: Double,
 
     @Column(name = "amount_for_one")
     val amountForOne: Double,
