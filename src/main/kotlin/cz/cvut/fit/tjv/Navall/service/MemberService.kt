@@ -71,7 +71,6 @@ class MemberService(
     }
 
     fun decreaseBalance(member: Member, change: Double) {
-        val currentBalance = member.balance
         val updatedMember = member.copy(
             balance = member.balance - change,
         )
