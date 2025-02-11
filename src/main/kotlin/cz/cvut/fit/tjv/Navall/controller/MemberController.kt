@@ -1,9 +1,9 @@
 package cz.cvut.fit.tjv.Navall.controller
 
 
+import cz.cvut.fit.tjv.Navall.models.dtos.MemberDto
+import cz.cvut.fit.tjv.Navall.models.dtos.toDto
 import cz.cvut.fit.tjv.Navall.service.MemberService
-import cz.cvut.fit.tjv.Navall.service.dtos.MemberDto
-import cz.cvut.fit.tjv.Navall.service.dtos.toDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -14,7 +14,8 @@ class MemberController(
     val memberService: MemberService
 ) {
     @GetMapping
-    fun getMembers(): ResponseEntity<List<MemberDto>> = ResponseEntity.ok(memberService.getMembers().map { it.toDto() })
+    fun getMembers(): ResponseEntity<List<MemberDto>> =
+        ResponseEntity.ok(memberService.getAllMembers().map { it.toDto() })
 
     @GetMapping("/{id}")
     fun getMember(@PathVariable id: Long): ResponseEntity<MemberDto> =
@@ -31,7 +32,6 @@ class MemberController(
     @PutMapping
     fun updateMember(@RequestBody member: MemberDto): ResponseEntity<MemberDto> =
         ResponseEntity.ok(memberService.updateMember(member).toDto())
-
 
     @DeleteMapping("/{id}")
     fun deleteMember(@PathVariable id: Long): ResponseEntity<MemberDto> =

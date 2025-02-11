@@ -1,9 +1,9 @@
 package cz.cvut.fit.tjv.Navall.controller
 
+import cz.cvut.fit.tjv.Navall.models.dtos.GroupDto
+import cz.cvut.fit.tjv.Navall.models.dtos.toDto
+import cz.cvut.fit.tjv.Navall.models.dtos.toEntity
 import cz.cvut.fit.tjv.Navall.service.GroupService
-import cz.cvut.fit.tjv.Navall.service.dtos.GroupDto
-import cz.cvut.fit.tjv.Navall.service.dtos.toDto
-import cz.cvut.fit.tjv.Navall.service.dtos.toEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -29,8 +29,6 @@ class GroupController(
         ResponseEntity.ok(groupService.updateGroup(id, group).toDto())
 
     @DeleteMapping("/{id}")
-    fun deleteGroup(@PathVariable id: Long): ResponseEntity<Void> {
-        groupService.deleteGroup(id)
-        return ResponseEntity.ok().build()
-    }
+    fun deleteGroup(@PathVariable id: Long): ResponseEntity<GroupDto> =
+        ResponseEntity.ok(groupService.deleteGroup(id).toDto())
 }
