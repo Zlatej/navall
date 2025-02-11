@@ -1,4 +1,4 @@
-package cz.cvut.fit.tjv.Navall.service.dtos
+package cz.cvut.fit.tjv.Navall.models.dtos
 
 import cz.cvut.fit.tjv.Navall.models.Group
 import cz.cvut.fit.tjv.Navall.models.Member
