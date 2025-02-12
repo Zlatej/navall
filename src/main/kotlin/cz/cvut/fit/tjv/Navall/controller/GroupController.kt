@@ -5,6 +5,7 @@ import cz.cvut.fit.tjv.Navall.models.dtos.toDto
 import cz.cvut.fit.tjv.Navall.models.dtos.toEntity
 import cz.cvut.fit.tjv.Navall.service.GroupService
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -23,7 +24,10 @@ class GroupController(
             ApiResponse(
                 responseCode = "200",
                 description = "Groups returned successfully",
-                content = [Content(mediaType = "application/json", schema = Schema(implementation = GroupDto::class))]
+                content = [Content(
+                    mediaType = "application/json",
+                    array = ArraySchema(schema = Schema(implementation = GroupDto::class))
+                )]
             ),
         ]
     )
