@@ -37,8 +37,9 @@ class GroupService(
     }
 
     @Transactional
-    fun deleteGroup(id: Long): Long {
+    fun deleteGroup(id: Long): Group {
+        val group = getGroupById(id)
         groupRepo.deleteGroupByIdNative(id)
-        return id
+        return group
     }
 }
