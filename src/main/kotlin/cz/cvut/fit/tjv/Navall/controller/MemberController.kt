@@ -83,9 +83,6 @@ class MemberController(
                     array = ArraySchema(schema = Schema(implementation = MemberDto::class))
                 )]
             ),
-            ApiResponse(
-                responseCode = "400",
-            )
         ]
     )
     @GetMapping("/group/{id}")
