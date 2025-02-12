@@ -17,7 +17,8 @@ class GroupService(
     fun getAllGroups(): List<Group> = groupRepo.findAll()
 
     fun getGroupById(id: Long) = groupRepo.findGroupById(id) ?: throw ResponseStatusException(
-        HttpStatus.NOT_FOUND, "Group with ID $id not found"
+        HttpStatus.NOT_FOUND,
+        "Group with ID $id not found"
     )
 
     @Transactional
@@ -25,10 +26,11 @@ class GroupService(
 
     @Transactional
     fun updateGroup(id: Long, group: GroupDto): Group {
-        if (id != group.id) throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Group IDs do not match")
-        val existingGroup = groupRepo.findGroupById(id) ?: throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Group with ID $id not found"
+        if (id != group.id) throw ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Group IDs do not match"
         )
+        val existingGroup = getGroupById(id)
         val updatedGroup = existingGroup.copy(
             name = group.name, currency = group.currency
         )
