@@ -23,6 +23,9 @@ class TransactionService(
         HttpStatus.NOT_FOUND, "Transaction with ID $id not found"
     )
 
+    fun getTransactionsOfGroup(groupId: Long): List<Transaction> =
+        transactionRepo.getTransactionsByGroup_Id(groupId)
+
     @Transactional
     fun createTransaction(transactionDto: TransactionDto): Transaction {
         checkTransactionDto(transactionDto)
@@ -47,8 +50,7 @@ class TransactionService(
     @Transactional
     fun updateTransaction(transactionDto: TransactionDto): Transaction {
         transactionDto.id ?: throw ResponseStatusException(
-            HttpStatus.BAD_REQUEST,
-            "TransactionId is mandatory",
+            HttpStatus.BAD_REQUEST, "TransactionId is mandatory",
         )
         checkTransactionDto(transactionDto)
 
@@ -124,7 +126,7 @@ class TransactionService(
                 HttpStatus.INTERNAL_SERVER_ERROR
             )
             if (participant.group.id != groupId) throw ResponseStatusException(
-                HttpStatus.FORBIDDEN, "Participant ${participant.id} does not belong to group $groupId"
+                HttpStatus.BAD_REQUEST, "Participant ${participant.id} does not belong to group $groupId"
             )
             percentageSum += participantDto.percentage
         }
@@ -135,18 +137,21 @@ class TransactionService(
     }
 
     @Transactional
-    fun deleteTransaction(transactionId: Long): Long {
+    fun deleteTransaction(transactionId: Long): Transaction {
         val existingTransaction = getTransaction(transactionId)
 
         revertParticipants(existingTransaction)
         memberService.decreaseBalance(existingTransaction.paidBy, existingTransaction.amount)
 
         transactionRepo.delete(existingTransaction)
-        return transactionId
+        return existingTransaction
     }
 
     fun getSettlement(groupId: Long): List<SettlementResponse> {
         val groupMembers = memberService.getMembersOfGroup(groupId)
+        if (groupMembers.isEmpty()) throw ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Group does not exist or has no members"
+        )
 
         val debtors = mutableListOf<Member>()
         val creditors = mutableListOf<Member>()
