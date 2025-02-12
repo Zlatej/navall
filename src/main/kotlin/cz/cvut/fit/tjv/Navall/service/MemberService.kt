@@ -80,6 +80,9 @@ class MemberService(
     fun deleteMember(id: Long): Member {
         val existingMember =
             memberRepo.getMemberById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User $id not found")
+        if (existingMember.transactions.isNotEmpty() || existingMember.participatedIn.isNotEmpty()) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete member $id as they have existing transactions.")
+        }
         memberRepo.delete(existingMember)
         return existingMember
     }
