@@ -10,6 +10,6 @@ interface GroupRepo : JpaRepository<Group, Long> {
     fun findGroupById(id: Long): Group?
 
     @Modifying
-    @Query(value = "DELETE FROM groups WHERE group_id = :id", nativeQuery = true)
+    @Query(value = "DELETE FROM transactions WHERE group_id = :id; DELETE FROM members WHERE group_id = :id; DELETE FROM groups WHERE group_id = :id", nativeQuery = true)
     fun deleteGroupByIdNative(@Param("id") id: Long)
 }

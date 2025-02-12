@@ -38,9 +38,6 @@ class GroupService(
 
     @Transactional
     fun deleteGroup(id: Long): Long {
-//        val group = getGroupById(id)
-//        group.transactions.forEach { transaction -> transaction.id?.let { transactionService.deleteTransaction(it) } }
-//        group.members.forEach { member -> member.id?.let { memberService.deleteMember(it) } }
         groupRepo.deleteGroupByIdNative(id)
         return id
     }
