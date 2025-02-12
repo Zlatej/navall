@@ -20,12 +20,12 @@ data class Member(
     val email: String,
 
     @ManyToOne
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "group_id", nullable = false)
     var group: Group,
 
-    @OneToMany(mappedBy = "paidBy", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @OneToMany(mappedBy = "paidBy")
     val transactions: MutableList<Transaction> = mutableListOf(),
 
-    @OneToMany(mappedBy = "participant", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @OneToMany(mappedBy = "participant")
     val participatedIn: MutableList<TransactionParticipant> = mutableListOf()
 )

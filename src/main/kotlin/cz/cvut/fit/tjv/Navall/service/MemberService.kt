@@ -4,6 +4,7 @@ import cz.cvut.fit.tjv.Navall.models.Member
 import cz.cvut.fit.tjv.Navall.models.dtos.MemberDto
 import cz.cvut.fit.tjv.Navall.repository.GroupRepo
 import cz.cvut.fit.tjv.Navall.repository.MemberRepo
+import jakarta.transaction.Transactional
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -35,6 +36,7 @@ class MemberService(
         HttpStatus.NOT_FOUND, "Email $email not found"
     )
 
+    @Transactional
     fun createMember(memberDto: MemberDto): Member {
         if (memberRepo.existsMemberByEmail(memberDto.email)) throw ResponseStatusException(
             HttpStatus.BAD_REQUEST, "Email already exists"
@@ -51,6 +53,7 @@ class MemberService(
         return member
     }
 
+    @Transactional
     fun updateMember(memberDto: MemberDto): Member {
         val existingMember = memberDto.id?.let { memberRepo.getMemberById(it) } ?: throw ResponseStatusException(
             HttpStatus.NOT_FOUND, "Member ${memberDto.id} not found"
@@ -77,11 +80,15 @@ class MemberService(
         memberRepo.save(updatedMember)
     }
 
+    @Transactional
     fun deleteMember(id: Long): Member {
         val existingMember =
             memberRepo.getMemberById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User $id not found")
         if (existingMember.transactions.isNotEmpty() || existingMember.participatedIn.isNotEmpty()) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete member $id as they have existing transactions.")
+            throw ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Cannot delete member $id as they have existing transactions."
+            )
         }
         memberRepo.delete(existingMember)
         return existingMember

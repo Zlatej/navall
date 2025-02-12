@@ -1,6 +1,5 @@
 package cz.cvut.fit.tjv.Navall.controller
 
-import cz.cvut.fit.tjv.Navall.models.Transaction
 import cz.cvut.fit.tjv.Navall.models.dtos.SettlementResponse
 import cz.cvut.fit.tjv.Navall.models.dtos.TransactionDto
 import cz.cvut.fit.tjv.Navall.models.dtos.toDto
@@ -30,6 +29,6 @@ class TransactionController(
         ResponseEntity.ok(transactionService.updateTransaction(transactionDto).toDto())
 
     @DeleteMapping("/{id}")
-    fun deleteTransaction(@PathVariable id: Long): ResponseEntity<Transaction> =
+    fun deleteTransaction(@PathVariable id: Long): ResponseEntity<Long> =
         ResponseEntity.ok(transactionService.deleteTransaction(id))
 }

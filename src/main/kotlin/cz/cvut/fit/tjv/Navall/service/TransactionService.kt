@@ -134,14 +134,15 @@ class TransactionService(
         )
     }
 
-    fun deleteTransaction(transactionId: Long): Transaction {
+    @Transactional
+    fun deleteTransaction(transactionId: Long): Long {
         val existingTransaction = getTransaction(transactionId)
 
         revertParticipants(existingTransaction)
         memberService.increaseBalance(existingTransaction.paidBy, existingTransaction.amount)
 
         transactionRepo.delete(existingTransaction)
-        return existingTransaction
+        return transactionId
     }
 
     fun getSettlement(groupId: Long): List<SettlementResponse> {

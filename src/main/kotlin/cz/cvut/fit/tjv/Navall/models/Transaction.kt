@@ -31,7 +31,7 @@ data class Transaction(
     var participants: MutableList<TransactionParticipant> = mutableListOf(),
 
     @ManyToOne
-    @JoinColumn (name = "group_id", nullable = false)
+    @JoinColumn(name = "group_id", nullable = false)
     val group: Group,
 ) {
     enum class TransactionType(val type: String) {
