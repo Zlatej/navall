@@ -139,7 +139,7 @@ class TransactionService(
         val existingTransaction = getTransaction(transactionId)
 
         revertParticipants(existingTransaction)
-        memberService.increaseBalance(existingTransaction.paidBy, existingTransaction.amount)
+        memberService.decreaseBalance(existingTransaction.paidBy, existingTransaction.amount)
 
         transactionRepo.delete(existingTransaction)
         return transactionId

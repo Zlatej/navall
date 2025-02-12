@@ -27,7 +27,7 @@ data class Transaction(
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @OneToMany(mappedBy = "transaction", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "transaction", cascade = [CascadeType.ALL])
     var participants: MutableList<TransactionParticipant> = mutableListOf(),
 
     @ManyToOne
