@@ -54,16 +54,38 @@ class MemberService(
     }
 
     @Transactional
-    fun updateMember(memberDto: MemberDto): Member {
-        val existingMember = memberDto.id?.let { memberRepo.getMemberById(it) } ?: throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Member ${memberDto.id} not found"
+    fun updateMember(id: Long, memberDto: MemberDto): Member {
+        if (memberDto.id == null) throw ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "ID is mandatory"
         )
+        if (id != memberDto.id) throw ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Member ID does not match ID in path"
+        )
+        if (memberRepo.existsMemberByEmail(memberDto.email)) throw ResponseStatusException(
+            HttpStatus.BAD_REQUEST, "Email already exists"
+        )
+        val existingMember = getMember(id)
         val updatedMember = existingMember.copy(
             name = memberDto.name,
             email = memberDto.email,
         )
         memberRepo.save(updatedMember)
         return updatedMember
+    }
+
+    @Transactional
+    fun deleteMember(id: Long): Member {
+        val existingMember = getMember(id)
+        if (existingMember.transactions.isNotEmpty() || existingMember.participatedIn.isNotEmpty()) {
+            throw ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Cannot delete member $id as they have existing transactions."
+            )
+        }
+        memberRepo.delete(existingMember)
+        return existingMember
     }
 
     fun increaseBalance(member: Member, change: Double): Member {
@@ -78,19 +100,5 @@ class MemberService(
             balance = member.balance - change,
         )
         memberRepo.save(updatedMember)
-    }
-
-    @Transactional
-    fun deleteMember(id: Long): Member {
-        val existingMember =
-            memberRepo.getMemberById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User $id not found")
-        if (existingMember.transactions.isNotEmpty() || existingMember.participatedIn.isNotEmpty()) {
-            throw ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Cannot delete member $id as they have existing transactions."
-            )
-        }
-        memberRepo.delete(existingMember)
-        return existingMember
     }
 }
