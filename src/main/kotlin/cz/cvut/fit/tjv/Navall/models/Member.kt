@@ -21,11 +21,11 @@ data class Member(
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    val group: Group,
+    var group: Group,
 
-    @OneToMany(mappedBy = "paidBy")
-    val transactions: List<Transaction> = emptyList(),
+    @OneToMany(mappedBy = "paidBy", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    val transactions: MutableList<Transaction> = mutableListOf(),
 
-    @OneToMany(mappedBy = "participant")
-    val participatedIn: List<TransactionParticipant> = emptyList(),
+    @OneToMany(mappedBy = "participant", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    val participatedIn: MutableList<TransactionParticipant> = mutableListOf()
 )

@@ -29,6 +29,10 @@ data class Transaction(
 
     @OneToMany(mappedBy = "transaction", cascade = [CascadeType.ALL], orphanRemoval = true)
     var participants: MutableList<TransactionParticipant> = mutableListOf(),
+
+    @ManyToOne
+    @JoinColumn (name = "group_id", nullable = false)
+    val group: Group,
 ) {
     enum class TransactionType(val type: String) {
         PAYMENT("payment"),

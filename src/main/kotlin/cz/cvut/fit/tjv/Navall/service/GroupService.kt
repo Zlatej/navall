@@ -31,9 +31,8 @@ class GroupService(
         return updatedGroup
     }
 
-    fun deleteGroup(id: Long): Group {
+    fun deleteGroup(id: Long) {
         val existingGroup = getGroupById(id)
         groupRepo.delete(existingGroup)
-        return existingGroup
     }
 }

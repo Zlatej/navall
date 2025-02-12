@@ -17,5 +17,8 @@ data class Group(
     val currency: String,
 
     @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val members: Set<Member> = emptySet(),
+    val members: MutableSet<Member> = mutableSetOf(),
+
+    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val transactions: MutableSet<Transaction> = mutableSetOf()
 )

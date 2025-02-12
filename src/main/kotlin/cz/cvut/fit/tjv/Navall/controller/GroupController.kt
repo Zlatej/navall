@@ -29,6 +29,6 @@ class GroupController(
         ResponseEntity.ok(groupService.updateGroup(id, group).toDto())
 
     @DeleteMapping("/{id}")
-    fun deleteGroup(@PathVariable id: Long): ResponseEntity<GroupDto> =
-        ResponseEntity.ok(groupService.deleteGroup(id).toDto())
+    fun deleteGroup(@PathVariable id: Long): ResponseEntity<Unit> =
+        ResponseEntity.ok(groupService.deleteGroup(id))
 }
