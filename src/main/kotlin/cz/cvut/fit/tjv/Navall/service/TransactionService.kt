@@ -7,6 +7,7 @@ import cz.cvut.fit.tjv.Navall.models.dtos.SettlementResponse
 import cz.cvut.fit.tjv.Navall.models.dtos.TransactionDto
 import cz.cvut.fit.tjv.Navall.models.dtos.TransactionParticipantDto
 import cz.cvut.fit.tjv.Navall.repository.TransactionRepo
+import jakarta.transaction.Transactional
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -22,6 +23,7 @@ class TransactionService(
         HttpStatus.NOT_FOUND, "Transaction with ID $id not found"
     )
 
+    @Transactional
     fun createTransaction(transactionDto: TransactionDto): Transaction {
         checkTransactionDto(transactionDto)
 
@@ -42,13 +44,13 @@ class TransactionService(
         return transactionRepo.save(savedTransaction)
     }
 
+    @Transactional
     fun updateTransaction(transactionDto: TransactionDto): Transaction {
         transactionDto.id ?: throw ResponseStatusException(
             HttpStatus.BAD_REQUEST,
             "TransactionId is mandatory",
         )
         checkTransactionDto(transactionDto)
-
 
         val existingTransaction = getTransaction(transactionDto.id)
         revertParticipants(existingTransaction)
@@ -82,7 +84,7 @@ class TransactionService(
             }
 
             val member = memberService.getMember(participantDto.id)
-            val amountForOne = transactionDto.amount * participantDto.percentage
+            val amountForOne = transactionDto.amount * participantDto.percentage / 100
 
             memberService.decreaseBalance(member, amountForOne)
 
