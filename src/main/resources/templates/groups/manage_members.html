@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Members for Group</title>
+</head>
+<body>
+<h1>Manage Members for Group: <span th:text="${group.name}"></span></h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Balance</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="member : ${members}">
+    <td th:text="${member.id}"></td>
+    <td th:text="${member.name}"></td>
+    <td th:text="${member.email}"></td>
+    <td th:text="${member.balance}"></td>
+    <td>
+      <!-- Replace with your actual endpoints for editing/deleting members -->
+      <a th:href="@{'/members/edit/' + ${member.id}}">Edit</a> |
+      <a th:href="@{'/members/delete/' + ${member.id}}">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Link to add a new member. Pass the group id if your member creation form needs it -->
+<br>
+<a th:href="@{'/members/create?groupId=' + ${group.id}}">Add New Member</a>
+
+<br><br>
+<a th:href="@{'/groups'}">Back to Groups List</a>
+</body>
+</html>

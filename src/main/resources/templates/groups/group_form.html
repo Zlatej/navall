@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Group</title>
+</head>
+<body>
+<h1>Create a New Group</h1>
+<form th:action="@{/groups/create}" th:object="${group}" method="post">
+  <div>
+    <label for="name">Group Name:</label>
+    <input type="text" id="name" th:field="*{name}" placeholder="Enter group name" required/>
+  </div>
+  <div>
+    <label for="currency">Currency:</label>
+    <input type="text" id="currency" th:field="*{currency}" placeholder="Enter currency" required/>
+  </div>
+  <div>
+    <button type="submit">Create Group</button>
+  </div>
+</form>
+<a th:href="@{/groups}">Back to Groups</a>
+</body>
+</html>
