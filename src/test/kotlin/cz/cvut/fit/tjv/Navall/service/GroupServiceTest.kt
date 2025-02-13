@@ -7,7 +7,6 @@ import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
 import kotlin.test.assertEquals
 
@@ -53,7 +52,8 @@ class GroupServiceTest {
     @Test
     fun `getGroupById throws exreption when not found`() {
         every { groupRepo.findGroupById(1) } returns null
-        val exception = assertThrows<ResponseStatusException> {
+
+        assertThrows<ResponseStatusException> {
             groupService.getGroupById(1)
         }
     }
@@ -85,7 +85,7 @@ class GroupServiceTest {
     fun `deleteGroup throws exception when IDs do not match`() {
         val groupDto = GroupDto(id = 1, name = "foo", currency = "EUR")
 
-        val exception = assertThrows<ResponseStatusException> {
+        assertThrows<ResponseStatusException> {
             groupService.updateGroup(2, groupDto)
         }
     }
