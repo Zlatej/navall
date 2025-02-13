@@ -1,6 +1,5 @@
 package cz.cvut.fit.tjv.Navall.controller
 
-import cz.cvut.fit.tjv.Navall.models.Member
 import cz.cvut.fit.tjv.Navall.models.dtos.GroupDto
 import cz.cvut.fit.tjv.Navall.models.dtos.toDto
 import cz.cvut.fit.tjv.Navall.models.dtos.toEntity
@@ -8,7 +7,7 @@ import cz.cvut.fit.tjv.Navall.service.GroupService
 import cz.cvut.fit.tjv.Navall.service.MemberService
 import cz.cvut.fit.tjv.Navall.service.TransactionService
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model;
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 

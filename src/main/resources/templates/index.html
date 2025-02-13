@@ -1,59 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Navall Landing Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-    <!-- HTMX JSON -->
-    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <meta charset="UTF-8" />
+    <title>Navall</title>
 </head>
 <body>
-<div class="container">
-    <h1>Welcome to Navall</h1>
-    <div>
-        <!-- GROUP BY EMAIL -->
-        <div>
-            <h3>Access Group</h3>
-            <form
-                    hx-get="/api/members/email"
-                    hx-headers='{"Accept": "text/html"}'
-                    hx-target="#groupResult"
-                    hx-trigger="submit">
-                <div>
-                    <label for="email">Enter your email:</label>
-                    <input type="email" id="email" name="email" placeholder="name@example.com" required>
-                </div>
-                <button type="submit">Go to Group</button>
-            </form>
-            <!-- This div will be updated with the result of the group lookup -->
-            <div id="groupResult"></div>
-        </div>
+<h1 th:text="'Welcome to Thymeleaf!'">Welcome to Navall</h1>
 
-        <!-- NEW GROUP -->
-        <div>
-            <h3>Create New Group</h3>
-            <form
-                    hx-post="/api/groups"
-                    hx-ext="json-enc"
-                    hx-headers='{"Content-Type": "application/json", "Accept": "text/html"}'
-                    hx-target="#newGroupResult"
-                    hx-trigger="submit">
-                <div>
-                    <label for="groupName">Group Name:</label>
-                    <input type="text" id="groupName" name="name" placeholder="Enter group name" required>
-                </div>
-                <div>
-                    <label for="currency">Currency:</label>
-                    <input type="text" id="currency" name="currency" placeholder="e.g. USD, EUR" required>
-                </div>
-                <button type="submit">Create Group</button>
-            </form>
-            <!-- This div will be updated with the result of the group creation -->
-            <div id="newGroupResult"></div>
-        </div>
-    </div>
-</div>
+<form th:action="@{/groups/member/email}" method="get">
+    <label for="email">Member Email:</label>
+    <input type="email" id="email" name="email" required />
+    <button type="submit">Find Group</button>
+</form>
+
+<a th:href="@{/groups/create}">Create new Group</a>
+<br>
+<a th:href="@{/groups}">Go to Groups List</a>
 </body>
 </html>
