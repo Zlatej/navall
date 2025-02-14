@@ -14,7 +14,7 @@
 </div>
 
 <div class="mb-6 space-x-4">
-    <a th:href="@{'/groups/edit/' + ${group.id}}"
+    <a th:href="@{'/groups/' + ${group.id} + '/edit'}"
        class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600">Edit Group</a>
     <form th:action="@{'/groups/' + ${group.id} + '/delete'}"
           method="post"
@@ -27,7 +27,7 @@
     <a th:href="@{'/groups/' + ${group.id} + '/settlement'}"
        class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Settle Up</a>
 </div>
-
+<div style ="padding-left: 30px; padding-right: 30px">
 <h2 class="text-2xl font-semibold mb-2">Members</h2>
 <table class="min-w-full bg-white border border-gray-200 mb-6">
     <thead class="bg-gray-100">
@@ -43,11 +43,14 @@
     </tr>
     </tbody>
 </table>
-
+</div>
+<div>
 <a th:href="@{'/groups/' + ${group.id} + '/members'}"
-   class="text-blue-500 hover:underline block mb-4">Manage Members</a>
+   class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600">Manage Members</a>
+</div>
+<div style="padding-top: 10px;">
 <a th:href="@{/groups}" class="text-blue-500 hover:underline block mb-6">Back to Groups List</a>
-
+</div>
 <h2 class="text-2xl font-semibold mb-2">Transactions</h2>
 <div class="mb-4">
     <a th:href="@{'/groups/' + ${group.id} + '/transactions/create'}"

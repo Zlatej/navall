@@ -23,16 +23,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="group : ${groups}" class="text-center border-t">
+    <tr th:each="group : ${groups}"
+        class="text-center border-t cursor-pointer hover:bg-gray-200"
+        th:onclick="|window.location.href='/groups/${group.id}'|">
         <td class="py-2 px-4">
-            <a th:href="@{'/groups/' + ${group.id}}"
-               th:text="${group.id}"
-               class="text-blue-500 hover:underline"></a>
+            <span th:text="${group.id}" class="text-blue-500 hover:underline"></span>
         </td>
         <td class="py-2 px-4" th:text="${group.name}"></td>
         <td class="py-2 px-4" th:text="${group.currency}"></td>
     </tr>
     </tbody>
 </table>
+<a th:href="@{'/'}" class="text-blue-500 hover:underline">Back to Landing page</a>
 </body>
 </html>
