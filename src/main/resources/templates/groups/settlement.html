@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Settlement Suggestion</title>
@@ -20,16 +20,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="settlement : ${settlements}" class="text-center border-t">
+    <tr class="text-center border-t" th:each="settlement : ${settlements}">
         <td class="py-2 px-4" th:text="${settlement.paidById}"></td>
         <td class="py-2 px-4" th:text="${settlement.participants[0].id}"></td>
         <td class="py-2 px-4" th:text="${settlement.amount}"></td>
         <td class="py-2 px-4">
-            <form th:action="@{'/groups/' + ${groupId} + '/settlement/apply'}" method="post">
-                <input type="hidden" name="paidById" th:value="${settlement.paidById}" />
-                <input type="hidden" name="creditorId" th:value="${settlement.participants[0].id}" />
-                <input type="hidden" name="amount" th:value="${settlement.amount}" />
-                <button type="submit" class="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600">
+            <form method="post" th:action="@{'/groups/' + ${groupId} + '/settlement/apply'}">
+                <input name="paidById" th:value="${settlement.paidById}" type="hidden"/>
+                <input name="creditorId" th:value="${settlement.participants[0].id}" type="hidden"/>
+                <input name="amount" th:value="${settlement.amount}" type="hidden"/>
+                <button class="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600" type="submit">
                     Apply
                 </button>
             </form>
@@ -38,7 +38,7 @@
     </tbody>
 </table>
 
-<a th:href="@{'/groups/' + ${groupId}}"
-   class="block text-blue-500 hover:underline">Done</a>
+<a class="block text-blue-500 hover:underline"
+   th:href="@{'/groups/' + ${groupId}}">Done</a>
 </body>
 </html>

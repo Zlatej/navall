@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Group Details</title>
@@ -14,47 +14,47 @@
 </div>
 
 <div class="mb-6 space-x-4">
-    <a th:href="@{'/groups/' + ${group.id} + '/edit'}"
-       class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600">Edit Group</a>
-    <form th:action="@{'/groups/' + ${group.id} + '/delete'}"
+    <a class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
+       th:href="@{'/groups/' + ${group.id} + '/edit'}">Edit Group</a>
+    <form class="inline"
           method="post"
-          class="inline"
-          onsubmit="return confirm('Are you sure you want to remove this group?');">
-        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+          onsubmit="return confirm('Are you sure you want to remove this group?');"
+          th:action="@{'/groups/' + ${group.id} + '/delete'}">
+        <button class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" type="submit">
             Remove Group
         </button>
     </form>
-    <a th:href="@{'/groups/' + ${group.id} + '/settlement'}"
-       class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Settle Up</a>
+    <a class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+       th:href="@{'/groups/' + ${group.id} + '/settlement'}">Settle Up</a>
 </div>
-<div style ="padding-left: 30px; padding-right: 30px">
-<h2 class="text-2xl font-semibold mb-2">Members</h2>
-<table class="min-w-full bg-white border border-gray-200 mb-6">
-    <thead class="bg-gray-100">
-    <tr>
-        <th class="py-2 px-4 border">Name</th>
-        <th class="py-2 px-4 border">Balance</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="member : ${members}" class="text-center border-t">
-        <td class="py-2 px-4" th:text="${member.name}"></td>
-        <td class="py-2 px-4" th:text="${member.balance}"></td>
-    </tr>
-    </tbody>
-</table>
+<div style="padding-left: 30px; padding-right: 30px">
+    <h2 class="text-2xl font-semibold mb-2">Members</h2>
+    <table class="min-w-full bg-white border border-gray-200 mb-6">
+        <thead class="bg-gray-100">
+        <tr>
+            <th class="py-2 px-4 border">Name</th>
+            <th class="py-2 px-4 border">Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center border-t" th:each="member : ${members}">
+            <td class="py-2 px-4" th:text="${member.name}"></td>
+            <td class="py-2 px-4" th:text="${member.balance}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div>
-<a th:href="@{'/groups/' + ${group.id} + '/members'}"
-   class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600">Manage Members</a>
+    <a class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
+       th:href="@{'/groups/' + ${group.id} + '/members'}">Manage Members</a>
 </div>
 <div style="padding-top: 10px;">
-<a th:href="@{/groups}" class="text-blue-500 hover:underline block mb-6">Back to Groups List</a>
+    <a class="text-blue-500 hover:underline block mb-6" th:href="@{/groups}">Back to Groups List</a>
 </div>
 <h2 class="text-2xl font-semibold mb-2">Transactions</h2>
 <div class="mb-4">
-    <a th:href="@{'/groups/' + ${group.id} + '/transactions/create'}"
-       class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+    <a class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+       th:href="@{'/groups/' + ${group.id} + '/transactions/create'}">
         Create Custom Transaction
     </a>
     <p class="mt-2">Total Transactions: <span th:text="${transactions.size()}"></span></p>
@@ -72,7 +72,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="transaction : ${transactions}" class="text-center border-t">
+    <tr class="text-center border-t" th:each="transaction : ${transactions}">
         <td class="py-2 px-4" th:text="${transaction.type}"></td>
         <td class="py-2 px-4" th:text="${transaction.amount}"></td>
         <td class="py-2 px-4" th:text="${transaction.paidByName}"></td>
@@ -83,11 +83,12 @@
           </span>
         </td>
         <td class="py-2 px-4 space-x-2">
-            <a th:href="@{'/groups/' + ${group.id} + '/transactions/edit/' + ${transaction.id}}"
-               class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600">Edit</a>
-            <form th:action="@{'/groups/' + ${group.id} + '/transactions/' + ${transaction.id} + '/delete'}"
-                  method="post" class="inline" onsubmit="return confirm('Are you sure you want to remove this transaction?');">
-                <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">
+            <a class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
+               th:href="@{'/groups/' + ${group.id} + '/transactions/edit/' + ${transaction.id}}">Edit</a>
+            <form class="inline"
+                  method="post" onsubmit="return confirm('Are you sure you want to remove this transaction?');"
+                  th:action="@{'/groups/' + ${group.id} + '/transactions/' + ${transaction.id} + '/delete'}">
+                <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600" type="submit">
                     Remove
                 </button>
             </form>

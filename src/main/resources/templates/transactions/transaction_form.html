@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" th:inline="javascript">
+<html lang="en" th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Custom Transaction</title>
@@ -45,7 +45,7 @@
 
         function updateIndices() {
             let rows = document.querySelectorAll("#participantsTable tbody .participantRow");
-            rows.forEach(function(row, index) {
+            rows.forEach(function (row, index) {
                 let select = row.querySelector("select");
                 let input = row.querySelector("input[type='number']");
                 select.name = "participants[" + index + "].id";
@@ -100,37 +100,39 @@
     Create Custom Transaction for Group <span th:text="${groupId}"></span>
 </h1>
 
-<form th:action="@{'/groups/' + ${groupId} + '/transactions/create'}"
+<form class="max-w-2xl mx-auto space-y-6"
       method="post"
-      th:object="${newTransaction}"
       onsubmit="return validateParticipants();"
-      class="max-w-2xl mx-auto space-y-6">
+      th:action="@{'/groups/' + ${groupId} + '/transactions/create'}"
+      th:object="${newTransaction}">
     <div>
         <label class="block font-semibold mb-1">Type:</label>
-        <select th:field="*{type}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option th:value="${T(cz.cvut.fit.tjv.Navall.models.Transaction.TransactionType).PAYMENT}"
-                    th:text="'Payment'"></option>
-            <option th:value="${T(cz.cvut.fit.tjv.Navall.models.Transaction.TransactionType).SETTLEMENT}"
-                    th:text="'Settlement'"></option>
+        <select class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                th:field="*{type}">
+            <option th:text="'Payment'"
+                    th:value="${T(cz.cvut.fit.tjv.Navall.models.Transaction.TransactionType).PAYMENT}"></option>
+            <option th:text="'Settlement'"
+                    th:value="${T(cz.cvut.fit.tjv.Navall.models.Transaction.TransactionType).SETTLEMENT}"></option>
         </select>
     </div>
 
     <div>
         <label class="block font-semibold mb-1">Amount:</label>
-        <input type="number" step="0.01" th:field="*{amount}" placeholder="Enter amount" required min="0.01"
-               class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" min="0.01" placeholder="Enter amount" required step="0.01" th:field="*{amount}"
+               type="number"/>
     </div>
 
     <div>
         <label class="block font-semibold mb-1">Paid By:</label>
-        <select th:field="*{paidById}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.name}"></option>
+        <select class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                th:field="*{paidById}">
+            <option th:each="member : ${members}" th:text="${member.name}" th:value="${member.id}"></option>
         </select>
     </div>
 
     <div>
         <h3 class="text-xl font-semibold mb-2">Participants</h3>
-        <table id="participantsTable" class="min-w-full bg-white border border-gray-200">
+        <table class="min-w-full bg-white border border-gray-200" id="participantsTable">
             <thead class="bg-gray-100">
             <tr class="text-center">
                 <th class="py-2 px-4 border">Participant</th>
@@ -141,17 +143,19 @@
             <tbody>
             <tr class="participantRow text-center border-t" th:each="participant, iterStat : *{participants}">
                 <td class="py-2 px-4">
-                    <select th:field="*{participants[__${iterStat.index}__].id}" class="w-full border border-gray-300 p-1 rounded">
-                        <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.name}"></option>
+                    <select class="w-full border border-gray-300 p-1 rounded"
+                            th:field="*{participants[__${iterStat.index}__].id}">
+                        <option th:each="member : ${members}" th:text="${member.name}" th:value="${member.id}"></option>
                     </select>
                 </td>
                 <td class="py-2 px-4">
-                    <input type="number" step="0.01" th:field="*{participants[__${iterStat.index}__].percentage}" placeholder="Enter percentage" required min="0.01"
-                           class="w-full border border-gray-300 p-1 rounded"/>
+                    <input class="w-full border border-gray-300 p-1 rounded" min="0.01" placeholder="Enter percentage"
+                           required step="0.01" th:field="*{participants[__${iterStat.index}__].percentage}"
+                           type="number"/>
                 </td>
                 <td class="py-2 px-4">
-                    <button type="button" onclick="removeParticipant(this)"
-                            class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600" onclick="removeParticipant(this)"
+                            type="button">
                         Remove
                     </button>
                 </td>
@@ -159,26 +163,26 @@
             </tbody>
         </table>
         <div class="mt-4 space-x-4">
-            <button type="button" onclick="addParticipant()"
-                    class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+            <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" onclick="addParticipant()"
+                    type="button">
                 Add Participant
             </button>
-            <button type="button" onclick="fillEvenPercentages()"
-                    class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+            <button class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" onclick="fillEvenPercentages()"
+                    type="button">
                 Fill Even Percentages
             </button>
         </div>
     </div>
 
     <div>
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+        <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600" type="submit">
             Create Transaction
         </button>
     </div>
 </form>
 
 <br>
-<a th:href="@{'/groups/' + ${groupId}}"
-   class="block text-blue-500 hover:underline text-center">Cancel</a>
+<a class="block text-blue-500 hover:underline text-center"
+   th:href="@{'/groups/' + ${groupId}}">Cancel</a>
 </body>
 </html>

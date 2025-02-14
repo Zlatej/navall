@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>All Groups</title>
@@ -8,8 +8,8 @@
 <body class="bg-gray-50 p-8">
 <h1 class="text-3xl font-bold mb-6">List of all Groups</h1>
 
-<form th:action="@{'/groups/create'}" method="get" class="mb-6">
-    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+<form class="mb-6" method="get" th:action="@{'/groups/create'}">
+    <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" type="submit">
         Create Group
     </button>
 </form>
@@ -23,17 +23,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="group : ${groups}"
-        class="text-center border-t cursor-pointer hover:bg-gray-200"
+    <tr class="text-center border-t cursor-pointer hover:bg-gray-200"
+        th:each="group : ${groups}"
         th:onclick="|window.location.href='/groups/${group.id}'|">
         <td class="py-2 px-4">
-            <span th:text="${group.id}" class="text-blue-500 hover:underline"></span>
+            <span class="text-blue-500 hover:underline" th:text="${group.id}"></span>
         </td>
         <td class="py-2 px-4" th:text="${group.name}"></td>
         <td class="py-2 px-4" th:text="${group.currency}"></td>
     </tr>
     </tbody>
 </table>
-<a th:href="@{'/'}" class="text-blue-500 hover:underline">Back to Landing page</a>
+<a class="text-blue-500 hover:underline" th:href="@{'/'}">Back to Landing page</a>
 </body>
 </html>

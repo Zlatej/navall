@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Create Group</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Create Group</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 p-8">
 <h1 class="text-3xl font-bold mb-6">Create a New Group</h1>
-<form th:action="@{/groups/create}" th:object="${group}" method="post" class="max-w-md mx-auto space-y-4">
-  <div>
-    <label for="name" class="block font-semibold mb-1">Group Name:</label>
-    <input type="text" id="name" th:field="*{name}" placeholder="Enter group name" required
-           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-  </div>
-  <div>
-    <label for="currency" class="block font-semibold mb-1">Currency:</label>
-    <input type="text" id="currency" th:field="*{currency}" placeholder="Enter currency" required
-           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-  </div>
-  <div>
-    <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-      Create Group
-    </button>
-  </div>
+<form class="max-w-md mx-auto space-y-4" method="post" th:action="@{/groups/create}" th:object="${group}">
+    <div>
+        <label class="block font-semibold mb-1" for="name">Group Name:</label>
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" id="name" placeholder="Enter group name" required th:field="*{name}"
+               type="text"/>
+    </div>
+    <div>
+        <label class="block font-semibold mb-1" for="currency">Currency:</label>
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" id="currency" placeholder="Enter currency" required th:field="*{currency}"
+               type="text"/>
+    </div>
+    <div>
+        <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600" type="submit">
+            Create Group
+        </button>
+    </div>
 </form>
-<a th:href="@{/groups}" class="block mt-4 text-blue-500 hover:underline text-center">Back to Groups</a>
+<a class="block mt-4 text-blue-500 hover:underline text-center" th:href="@{/groups}">Back to Groups</a>
 </body>
 </html>

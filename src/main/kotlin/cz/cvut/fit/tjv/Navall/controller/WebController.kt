@@ -54,19 +54,21 @@ class WebController(
             group.id?.let { it -> transactionService.getTransactionsOfGroup(it) }
         val webTransactions: MutableList<WebTransactionDto> = mutableListOf()
 
-        transactions?.forEach{ t ->
+        transactions?.forEach { t ->
             val pNames: MutableList<String> = mutableListOf()
-            t.participants.forEach { p-> pNames.add(p.participant.name) }
-            webTransactions.add(WebTransactionDto(
-                id = t.id,
-                type = t.type,
-                amount = t.amount,
-                paidById = t.paidBy.id,
-                paidByName = t.paidBy.name,
-                createdAt = t.createdAt,
-                participants = t.participants.map { it.toDto() },
-                participantNames = pNames
-            ))
+            t.participants.forEach { p -> pNames.add(p.participant.name) }
+            webTransactions.add(
+                WebTransactionDto(
+                    id = t.id,
+                    type = t.type,
+                    amount = t.amount,
+                    paidById = t.paidBy.id,
+                    paidByName = t.paidBy.name,
+                    createdAt = t.createdAt,
+                    participants = t.participants.map { it.toDto() },
+                    participantNames = pNames
+                )
+            )
         }
         model.addAttribute("group", group.toDto())
         model.addAttribute("members", members)
@@ -85,19 +87,21 @@ class WebController(
                 group.id?.let { it -> transactionService.getTransactionsOfGroup(it) }
             val webTransactions: MutableList<WebTransactionDto> = mutableListOf()
 
-            transactions?.forEach{ t ->
+            transactions?.forEach { t ->
                 val pNames: MutableList<String> = mutableListOf()
-                t.participants.forEach { p-> pNames.add(p.participant.name) }
-                webTransactions.add(WebTransactionDto(
-                    id = t.id,
-                    type = t.type,
-                    amount = t.amount,
-                    paidById = t.paidBy.id,
-                    paidByName = t.paidBy.name,
-                    createdAt = t.createdAt,
-                    participants = t.participants.map { it.toDto() },
-                    participantNames = pNames
-                ))
+                t.participants.forEach { p -> pNames.add(p.participant.name) }
+                webTransactions.add(
+                    WebTransactionDto(
+                        id = t.id,
+                        type = t.type,
+                        amount = t.amount,
+                        paidById = t.paidBy.id,
+                        paidByName = t.paidBy.name,
+                        createdAt = t.createdAt,
+                        participants = t.participants.map { it.toDto() },
+                        participantNames = pNames
+                    )
+                )
             }
 
             webTransactions.forEach { println(it.paidByName) }
@@ -159,8 +163,7 @@ class WebController(
     fun createMember(@PathVariable groupId: Long, @ModelAttribute("newMember") memberDto: MemberDto): String {
         try {
             memberService.createMember(memberDto)
-        }
-        catch (ex: ResponseStatusException) {
+        } catch (ex: ResponseStatusException) {
             return "error/400"
         }
         return "redirect:/groups/$groupId/members"
@@ -168,9 +171,11 @@ class WebController(
 
     // Show Edit Member Form
     @GetMapping("/groups/{groupId}/members/{memberId}/edit")
-    fun showEditMemberForm(@PathVariable groupId: Long,
-                           @PathVariable memberId: Long,
-                           model: Model): String {
+    fun showEditMemberForm(
+        @PathVariable groupId: Long,
+        @PathVariable memberId: Long,
+        model: Model
+    ): String {
         val member = memberService.getMember(memberId)
         val memberDto = MemberDto(
             id = member.id,
@@ -186,13 +191,14 @@ class WebController(
 
     // Process Edit Member Form Submission
     @PostMapping("/groups/{groupId}/members/{memberId}/edit")
-    fun editMember(@PathVariable groupId: Long,
-                   @PathVariable memberId: Long,
-                   @ModelAttribute("member") memberDto: MemberDto): String {
+    fun editMember(
+        @PathVariable groupId: Long,
+        @PathVariable memberId: Long,
+        @ModelAttribute("member") memberDto: MemberDto
+    ): String {
         memberService.updateMember(memberId, memberDto)
         return "redirect:/groups/$groupId/members"
     }
-
 
 
     // gets settlement suggestion
