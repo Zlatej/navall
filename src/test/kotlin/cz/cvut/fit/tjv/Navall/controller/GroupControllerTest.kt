@@ -125,7 +125,7 @@ class GroupControllerTest {
 
         // UPDATE
 
-        val putGroupDto = GroupDto(name = "up", currency = "dated")
+        val putGroupDto = GroupDto(id = createdGroupDto.id, name = "up", currency = "dated")
         val updateResponse = mockMvc.put("/api/groups/${createdGroupDto.id}") {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(putGroupDto)
