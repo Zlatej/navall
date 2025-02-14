@@ -44,20 +44,19 @@
         </tbody>
     </table>
 </div>
-<div>
+<div style="padding-bottom: 30px">
     <a class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
        th:href="@{'/groups/' + ${group.id} + '/members'}">Manage Members</a>
 </div>
-<div style="padding-top: 10px;">
-    <a class="text-blue-500 hover:underline block mb-6" th:href="@{/groups}">Back to Groups List</a>
-</div>
 <h2 class="text-2xl font-semibold mb-2">Transactions</h2>
-<div class="mb-4">
+<div class="mb-4" style="padding: 10px">
     <a class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
        th:href="@{'/groups/' + ${group.id} + '/transactions/create'}">
         Create Custom Transaction
     </a>
-    <p class="mt-2">Total Transactions: <span th:text="${transactions.size()}"></span></p>
+</div>
+<div style="padding: 10px">
+<p class="mt-2">Total Transactions: <span th:text="${transactions.size()}"></span></p>
 </div>
 
 <table class="min-w-full bg-white border border-gray-200">
@@ -96,5 +95,8 @@
     </tr>
     </tbody>
 </table>
+<div style="padding-top: 30px;">
+    <a class="text-blue-500 hover:underline block mb-6" th:href="@{/groups}">Back to Groups List</a>
+</div>
 </body>
 </html>
