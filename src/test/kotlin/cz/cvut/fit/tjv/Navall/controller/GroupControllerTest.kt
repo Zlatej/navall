@@ -16,11 +16,12 @@ import kotlin.test.assertNotNull
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")  // Ensures H2 is used
-@Transactional  // Rollback changes after each test
+@ActiveProfiles("test")
+@Transactional
 class GroupControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
+
     @Autowired
     private lateinit var objectMapper: ObjectMapper
 
