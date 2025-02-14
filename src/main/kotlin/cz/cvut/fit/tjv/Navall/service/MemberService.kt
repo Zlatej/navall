@@ -36,7 +36,7 @@ class MemberService(
             HttpStatus.BAD_REQUEST, "Email already exists"
         )
         val group = groupRepo.findGroupById(memberDto.groupId) ?: throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Group ${memberDto.groupId} not found"
+            HttpStatus.BAD_REQUEST, "Group ${memberDto.groupId} not found"
         )
         val member = Member(
             name = memberDto.name,

@@ -79,7 +79,7 @@ class MemberServiceTest {
 
     @Test
     fun `createMember should return new Member`() {
-        val member = Member(id = 1, name = "foo", email = "foo@x.y", group = group)
+        val member = Member(id = null, name = "foo", email = "foo@x.y", group = group)
         val memberDto = MemberDto(id = null, name = "foo", email = "foo@x.y", groupId = 1)
 
         every { memberRepo.existsMemberByEmail("foo@x.y") } returns false
@@ -87,7 +87,7 @@ class MemberServiceTest {
         every { memberRepo.save(any()) } returns member
 
         val res = memberService.createMember(memberDto)
-        assertEquals(res, member)
+        assertEquals(member, res)
     }
 
     @Test
