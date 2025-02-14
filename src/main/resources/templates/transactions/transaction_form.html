@@ -118,7 +118,8 @@
 
     <div>
         <label class="block font-semibold mb-1">Amount:</label>
-        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" min="0.01" placeholder="Enter amount" required step="0.01" th:field="*{amount}"
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+               min="0.01" placeholder="Enter amount" required step="0.01" th:field="*{amount}"
                type="number"/>
     </div>
 
@@ -154,7 +155,8 @@
                            type="number"/>
                 </td>
                 <td class="py-2 px-4">
-                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600" onclick="removeParticipant(this)"
+                    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+                            onclick="removeParticipant(this)"
                             type="button">
                         Remove
                     </button>

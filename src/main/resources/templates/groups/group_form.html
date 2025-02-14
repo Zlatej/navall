@@ -10,12 +10,14 @@
 <form class="max-w-md mx-auto space-y-4" method="post" th:action="@{/groups/create}" th:object="${group}">
     <div>
         <label class="block font-semibold mb-1" for="name">Group Name:</label>
-        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" id="name" placeholder="Enter group name" required th:field="*{name}"
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+               id="name" placeholder="Enter group name" required th:field="*{name}"
                type="text"/>
     </div>
     <div>
         <label class="block font-semibold mb-1" for="currency">Currency:</label>
-        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" id="currency" placeholder="Enter currency" required th:field="*{currency}"
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+               id="currency" placeholder="Enter currency" required th:field="*{currency}"
                type="text"/>
     </div>
     <div>

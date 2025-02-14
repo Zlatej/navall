@@ -13,7 +13,8 @@
       th:object="${member}">
     <div>
         <label class="block font-semibold mb-1">Name:</label>
-        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required th:field="*{name}"
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+               required th:field="*{name}"
                type="text"/>
     </div>
     <input th:field="*{groupId}" type="hidden"/>

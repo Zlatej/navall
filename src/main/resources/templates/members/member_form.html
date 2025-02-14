@@ -13,12 +13,14 @@
       th:object="${newMember}">
     <div>
         <label class="block font-semibold mb-1">Name:</label>
-        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required th:field="*{name}"
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+               required th:field="*{name}"
                type="text"/>
     </div>
     <div>
         <label class="block font-semibold mb-1">Email:</label>
-        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required th:field="*{email}"
+        <input class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+               required th:field="*{email}"
                type="email"/>
     </div>
     <input th:field="*{groupId}" type="hidden"/>
