@@ -74,17 +74,6 @@ class WebController(
         return "groups/group_detail"
     }
 
-    // member management
-    @GetMapping("/groups/{id}/members")
-    fun manageGroupMembers(@PathVariable id: Long, model: Model): String {
-        val group = groupService.getGroupById(id).toDto()
-        val members = memberService.getMembersOfGroup(id).map { it.toDto() }
-
-        model.addAttribute("group", group)
-        model.addAttribute("members", members)
-        return "groups/manage_members"
-    }
-
     // goes to group by user email
     @GetMapping("/groups/member/email")
     fun fundGroupByEmail(@RequestParam email: String, model: Model): String {
@@ -138,6 +127,73 @@ class WebController(
         groupService.deleteGroup(id)
         return "redirect:/groups"
     }
+
+
+    // Manage Members for Group
+    @GetMapping("/groups/{groupId}/members")
+    fun manageGroupMembers(@PathVariable groupId: Long, model: Model): String {
+        val group = groupService.getGroupById(groupId).toDto()
+        val members = memberService.getMembersOfGroup(groupId).map { it.toDto() }
+        model.addAttribute("group", group)
+        model.addAttribute("members", members)
+        return "members/manage_members"
+    }
+
+    // Show Create Member Form
+    @GetMapping("/groups/{groupId}/members/create")
+    fun showCreateMemberForm(@PathVariable groupId: Long, model: Model): String {
+        val newMember = MemberDto(
+            id = null,
+            name = "",
+            email = "",
+            balance = 0.0,
+            groupId = groupId
+        )
+        model.addAttribute("newMember", newMember)
+        model.addAttribute("groupId", groupId)
+        return "members/member_form"
+    }
+
+    // Process Create Member Form Submission
+    @PostMapping("/groups/{groupId}/members/create")
+    fun createMember(@PathVariable groupId: Long, @ModelAttribute("newMember") memberDto: MemberDto): String {
+        try {
+            memberService.createMember(memberDto)
+        }
+        catch (ex: ResponseStatusException) {
+            return "error/400"
+        }
+        return "redirect:/groups/$groupId/members"
+    }
+
+    // Show Edit Member Form
+    @GetMapping("/groups/{groupId}/members/{memberId}/edit")
+    fun showEditMemberForm(@PathVariable groupId: Long,
+                           @PathVariable memberId: Long,
+                           model: Model): String {
+        val member = memberService.getMember(memberId)
+        val memberDto = MemberDto(
+            id = member.id,
+            name = member.name,
+            email = member.email,
+            balance = member.balance,
+            groupId = member.group.id ?: groupId
+        )
+        model.addAttribute("member", memberDto)
+        model.addAttribute("groupId", groupId)
+        return "members/member_edit_form"
+    }
+
+    // Process Edit Member Form Submission
+    @PostMapping("/groups/{groupId}/members/{memberId}/edit")
+    fun editMember(@PathVariable groupId: Long,
+                   @PathVariable memberId: Long,
+                   @ModelAttribute("member") memberDto: MemberDto): String {
+        memberService.updateMember(memberId, memberDto)
+        return "redirect:/groups/$groupId/members"
+    }
+
+
 
     // gets settlement suggestion
     @GetMapping("/groups/{id}/settlement")

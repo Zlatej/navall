@@ -10,7 +10,6 @@
 <table border="1">
   <thead>
   <tr>
-    <th>ID</th>
     <th>Name</th>
     <th>Email</th>
     <th>Balance</th>
@@ -19,24 +18,19 @@
   </thead>
   <tbody>
   <tr th:each="member : ${members}">
-    <td th:text="${member.id}"></td>
     <td th:text="${member.name}"></td>
     <td th:text="${member.email}"></td>
     <td th:text="${member.balance}"></td>
     <td>
-      <!-- Replace with your actual endpoints for editing/deleting members -->
-      <a th:href="@{'/members/edit/' + ${member.id}}">Edit</a> |
-      <a th:href="@{'/members/delete/' + ${member.id}}">Delete</a>
+      <a th:href="@{'/groups/' + ${group.id} + '/members/' + ${member.id} + '/edit'}">Edit</a>
     </td>
   </tr>
   </tbody>
 </table>
 
-<!-- Link to add a new member. Pass the group id if your member creation form needs it -->
 <br>
-<a th:href="@{'/members/create?groupId=' + ${group.id}}">Add New Member</a>
-
+<a th:href="@{'/groups/' + ${group.id} + '/members/create'}">Add New Member</a>
 <br><br>
-<a th:href="@{'/groups'}">Back to Groups List</a>
+<a th:href="@{'/groups/' + ${group.id}}">Back to Group Details</a>
 </body>
 </html>

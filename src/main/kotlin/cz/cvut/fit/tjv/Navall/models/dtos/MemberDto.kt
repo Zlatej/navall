@@ -7,8 +7,7 @@ data class MemberDto(
     @field:NotBlank(message = "Name is required")
     val name: String,
     val balance: Double = 0.0,
-    @field:NotBlank(message = "Email is required")
-    val email: String,
+    val email: String = "",
     @field:NotBlank(message = "Group ID is required")
     val groupId: Long,
 )

@@ -38,6 +38,10 @@ class MemberService(
 
     @Transactional
     fun createMember(memberDto: MemberDto): Member {
+        if (memberDto.email.isBlank()) throw ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Email is required"
+        )
         if (memberRepo.existsMemberByEmail(memberDto.email)) throw ResponseStatusException(
             HttpStatus.BAD_REQUEST, "Email already exists"
         )
@@ -63,13 +67,9 @@ class MemberService(
             HttpStatus.BAD_REQUEST,
             "Member ID does not match ID in path"
         )
-        if (memberRepo.existsMemberByEmail(memberDto.email)) throw ResponseStatusException(
-            HttpStatus.BAD_REQUEST, "Email already exists"
-        )
         val existingMember = getMember(id)
         val updatedMember = existingMember.copy(
             name = memberDto.name,
-            email = memberDto.email,
         )
         memberRepo.save(updatedMember)
         return updatedMember
