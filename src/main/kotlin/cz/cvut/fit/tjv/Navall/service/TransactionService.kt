@@ -131,7 +131,7 @@ class TransactionService(
             percentageSum += participantDto.percentage
         }
 
-        if (!percentageSum.equals(100.0)) throw ResponseStatusException(
+        if (percentageSum <= 99.9 || percentageSum > 100.0) throw ResponseStatusException(
             HttpStatus.BAD_REQUEST, "Percentages must sum to 100, current sum is $percentageSum"
         )
     }
