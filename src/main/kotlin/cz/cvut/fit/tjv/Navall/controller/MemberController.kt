@@ -111,7 +111,7 @@ class MemberController(
     fun createMember(@RequestBody member: MemberDto): ResponseEntity<MemberDto> =
         ResponseEntity.status(HttpStatus.CREATED).body(memberService.createMember(member).toDto())
 
-    @Operation(summary = "Updates member", description = "Returns updated member")
+    @Operation(summary = "Updates member", description = "ONLY NAME CAN BE UPDATED. Returns updated member.")
     @ApiResponses(
         value = [
             ApiResponse(

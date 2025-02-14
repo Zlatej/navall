@@ -58,6 +58,10 @@ class MemberService(
             "Member ID does not match ID in path"
         )
         val existingMember = getMember(id)
+        if (existingMember.email != memberDto.email) throw ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Email cannot be updated"
+        )
         val updatedMember = existingMember.copy(
             name = memberDto.name,
         )
