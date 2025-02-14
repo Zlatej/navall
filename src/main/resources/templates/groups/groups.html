@@ -3,29 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>All Groups</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>List of all Groups</h1>
+<body class="bg-gray-50 p-8">
+<h1 class="text-3xl font-bold mb-6">List of all Groups</h1>
 
-<form th:action="@{'/groups/create'}" method="get">
-    <button type="submit">Create Group</button>
+<form th:action="@{'/groups/create'}" method="get" class="mb-6">
+    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+        Create Group
+    </button>
 </form>
 
-<table border="1">
+<table class="min-w-full bg-white border border-gray-200">
+    <thead class="bg-gray-100">
     <tr>
-        <th>ID</th>
-        <th>Group Name</th>
-        <th>Currency</th>
+        <th class="py-2 px-4 border">ID</th>
+        <th class="py-2 px-4 border">Group Name</th>
+        <th class="py-2 px-4 border">Currency</th>
     </tr>
-    <tr th:each="group : ${groups}">
-        <td>
-            <a th:href="@{'/groups/' + ${group.id}}" th:text="${group.id}"></a>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${groups}" class="text-center border-t">
+        <td class="py-2 px-4">
+            <a th:href="@{'/groups/' + ${group.id}}"
+               th:text="${group.id}"
+               class="text-blue-500 hover:underline"></a>
         </td>
-        <td th:text="${group.name}"></td>
-        <td th:text="${group.currency}"></td>
+        <td class="py-2 px-4" th:text="${group.name}"></td>
+        <td class="py-2 px-4" th:text="${group.currency}"></td>
     </tr>
+    </tbody>
 </table>
-
-
 </body>
 </html>

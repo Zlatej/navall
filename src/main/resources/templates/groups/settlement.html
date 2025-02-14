@@ -3,42 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Settlement Suggestion</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>Settlement Suggestions for Group <span th:text="${groupId}"></span></h1>
+<body class="bg-gray-50 p-8">
+<h1 class="text-3xl font-bold mb-6">
+    Settlement Suggestions for Group <span th:text="${groupId}"></span>
+</h1>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>Debtor (Paid By)</th>
-        <th>Creditor</th>
-        <th>Amount</th>
-        <th>Action</th>
+<table class="min-w-full bg-white border border-gray-200 mb-6">
+    <thead class="bg-gray-100">
+    <tr class="text-center">
+        <th class="py-2 px-4 border">Debtor (Paid By)</th>
+        <th class="py-2 px-4 border">Creditor</th>
+        <th class="py-2 px-4 border">Amount</th>
+        <th class="py-2 px-4 border">Action</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Iterate over each settlement suggestion -->
-    <tr th:each="settlement : ${settlements}">
-        <td th:text="${settlement.paidById}"></td>
-        <!-- Assuming there's exactly one creditor in the suggestion -->
-        <td th:text="${settlement.participants[0].id}"></td>
-        <td th:text="${settlement.amount}"></td>
-        <td>
-            <!-- Each row has a form with an Apply button -->
+    <tr th:each="settlement : ${settlements}" class="text-center border-t">
+        <td class="py-2 px-4" th:text="${settlement.paidById}"></td>
+        <td class="py-2 px-4" th:text="${settlement.participants[0].id}"></td>
+        <td class="py-2 px-4" th:text="${settlement.amount}"></td>
+        <td class="py-2 px-4">
             <form th:action="@{'/groups/' + ${groupId} + '/settlement/apply'}" method="post">
-                <!-- Pass the required settlement details as hidden fields -->
                 <input type="hidden" name="paidById" th:value="${settlement.paidById}" />
                 <input type="hidden" name="creditorId" th:value="${settlement.participants[0].id}" />
                 <input type="hidden" name="amount" th:value="${settlement.amount}" />
-                <button type="submit">Apply</button>
+                <button type="submit" class="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600">
+                    Apply
+                </button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
 
-<!-- Done button to return to group details -->
-<br>
-<a th:href="@{'/groups/' + ${groupId}}">Done</a>
+<a th:href="@{'/groups/' + ${groupId}}"
+   class="block text-blue-500 hover:underline">Done</a>
 </body>
 </html>

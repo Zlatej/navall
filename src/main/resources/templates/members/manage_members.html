@@ -3,34 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Manage Members for Group</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>Manage Members for Group: <span th:text="${group.name}"></span></h1>
+<body class="bg-gray-50 p-8">
+<h1 class="text-3xl font-bold mb-6">
+  Manage Members for Group: <span th:text="${group.name}"></span>
+</h1>
 
-<table border="1">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Balance</th>
-    <th>Actions</th>
+<table class="min-w-full bg-white border border-gray-200 mb-6">
+  <thead class="bg-gray-100">
+  <tr class="text-center">
+    <th class="py-2 px-4 border">Name</th>
+    <th class="py-2 px-4 border">Email</th>
+    <th class="py-2 px-4 border">Balance</th>
+    <th class="py-2 px-4 border">Actions</th>
   </tr>
   </thead>
   <tbody>
-  <tr th:each="member : ${members}">
-    <td th:text="${member.name}"></td>
-    <td th:text="${member.email}"></td>
-    <td th:text="${member.balance}"></td>
-    <td>
-      <a th:href="@{'/groups/' + ${group.id} + '/members/' + ${member.id} + '/edit'}">Edit</a>
+  <tr th:each="member : ${members}" class="text-center border-t">
+    <td class="py-2 px-4" th:text="${member.name}"></td>
+    <td class="py-2 px-4" th:text="${member.email}"></td>
+    <td class="py-2 px-4" th:text="${member.balance}"></td>
+    <td class="py-2 px-4">
+      <a th:href="@{'/groups/' + ${group.id} + '/members/' + ${member.id} + '/edit'}"
+         class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600">
+        Edit
+      </a>
     </td>
   </tr>
   </tbody>
 </table>
 
+<a th:href="@{'/groups/' + ${group.id} + '/members/create'}"
+   class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 inline-block mb-4">
+  Add New Member
+</a>
 <br>
-<a th:href="@{'/groups/' + ${group.id} + '/members/create'}">Add New Member</a>
-<br><br>
-<a th:href="@{'/groups/' + ${group.id}}">Back to Group Details</a>
+<a th:href="@{'/groups/' + ${group.id}}"
+   class="text-blue-500 hover:underline">Back to Group Details</a>
 </body>
 </html>

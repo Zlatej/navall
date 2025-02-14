@@ -3,22 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Group</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>Create a New Group</h1>
-<form th:action="@{/groups/create}" th:object="${group}" method="post">
+<body class="bg-gray-50 p-8">
+<h1 class="text-3xl font-bold mb-6">Create a New Group</h1>
+<form th:action="@{/groups/create}" th:object="${group}" method="post" class="max-w-md mx-auto space-y-4">
   <div>
-    <label for="name">Group Name:</label>
-    <input type="text" id="name" th:field="*{name}" placeholder="Enter group name" required/>
+    <label for="name" class="block font-semibold mb-1">Group Name:</label>
+    <input type="text" id="name" th:field="*{name}" placeholder="Enter group name" required
+           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
   </div>
   <div>
-    <label for="currency">Currency:</label>
-    <input type="text" id="currency" th:field="*{currency}" placeholder="Enter currency" required/>
+    <label for="currency" class="block font-semibold mb-1">Currency:</label>
+    <input type="text" id="currency" th:field="*{currency}" placeholder="Enter currency" required
+           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
   </div>
   <div>
-    <button type="submit">Create Group</button>
+    <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+      Create Group
+    </button>
   </div>
 </form>
-<a th:href="@{/groups}">Back to Groups</a>
+<a th:href="@{/groups}" class="block mt-4 text-blue-500 hover:underline text-center">Back to Groups</a>
 </body>
 </html>
