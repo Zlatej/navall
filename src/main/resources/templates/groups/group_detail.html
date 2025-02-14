@@ -12,43 +12,71 @@
 
 <h3>Actions</h3>
 <a th:href="@{'/groups/edit/' + ${group.id}}">Edit Group</a>
-<form th:action="@{'/groups/' + ${group.id} + '/delete'}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to remove this group?');">
+<form th:action="@{'/groups/' + ${group.id} + '/delete'}" method="post" style="display:inline;"
+      onsubmit="return confirm('Are you sure you want to remove this group?');">
     <button type="submit">Remove Group</button>
 </form>
 <a th:href="@{'/groups/' + ${group.id} + '/settlement'}">Settle Up</a>
 
 <h2>Members</h2>
-<ul>
-    <li th:each="member : ${members}" th:text="${member.name}"></li>
-</ul>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Balance</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${members}">
+        <td th:text="${member.name}"></td>
+        <td th:text="${member.balance}"></td>
+    </tr>
+    </tbody>
+</table>
 
 <a th:href="@{'/groups/' + ${group.id} + '/members'}">Manage Members</a>
 <br>
 <a th:href="@{/groups}">Back to Groups List</a>
 <br>
 <h2>Transactions</h2>
+<a th:href="@{'/groups/' + ${group.id} + '/transactions/create'}">Create Custom Transaction</a>
 <p>Total Transactions: <span th:text="${transactions.size()}"></span></p>
 
 <table border="1">
     <thead>
     <tr>
-        <th>ID</th>
         <th>Type</th>
         <th>Amount</th>
         <th>Paid By</th>
         <th>Created At</th>
+        <th>Participants</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="transaction : ${transactions}">
-        <td th:text="${transaction.id}">Transaction ID</td>
-        <td th:text="${transaction.type}">Type</td>
-        <td th:text="${transaction.amount}">Amount</td>
-        <td th:text="${transaction.paidById}">Paid By</td>
-        <td th:text="${transaction.createdAt}">Created At</td>
+        <td th:text="${transaction.type}"></td>
+        <td th:text="${transaction.amount}"></td>
+        <td th:text="${transaction.paidByName}"></td>
+        <td th:text="${transaction.createdAt}"></td>
+        <!-- Join the participant names into a comma-separated string -->
+        <td>
+  <span th:each="name, iterStat : ${transaction.participantNames}">
+    <span th:text="${name}"></span><span th:if="${!iterStat.last}">, </span>
+  </span>
+        </td>
+
+
+        <td>
+            <a th:href="@{'/groups/' + ${group.id} + '/transactions/edit/' + ${transaction.id}}">Edit</a>
+            <form th:action="@{'/groups/' + ${group.id} + '/transactions/' + ${transaction.id} + '/delete'}"
+                  method="post" style="display:inline;"
+                  onsubmit="return confirm('Are you sure you want to remove this transaction?');">
+                <button type="submit">Remove</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
-
 </body>
 </html>

@@ -50,10 +50,27 @@ class WebController(
     fun getGroup(@PathVariable id: Long, model: Model): String {
         val group = groupService.getGroupById(id)
         val members = memberService.getMembersOfGroup(id).map { it.toDto() }
-        val tranactions = transactionService.getTransactionsOfGroup(id).map { it.toDto() }
+        val transactions =
+            group.id?.let { it -> transactionService.getTransactionsOfGroup(it) }
+        val webTransactions: MutableList<WebTransactionDto> = mutableListOf()
+
+        transactions?.forEach{ t ->
+            val pNames: MutableList<String> = mutableListOf()
+            t.participants.forEach { p-> pNames.add(p.participant.name) }
+            webTransactions.add(WebTransactionDto(
+                id = t.id,
+                type = t.type,
+                amount = t.amount,
+                paidById = t.paidBy.id,
+                paidByName = t.paidBy.name,
+                createdAt = t.createdAt,
+                participants = t.participants.map { it.toDto() },
+                participantNames = pNames
+            ))
+        }
         model.addAttribute("group", group.toDto())
         model.addAttribute("members", members)
-        model.addAttribute("transactions", tranactions)
+        model.addAttribute("transactions", webTransactions)
         return "groups/group_detail"
     }
 
@@ -76,11 +93,29 @@ class WebController(
             val group = member.group
             val members = group.id?.let { it1 -> memberService.getMembersOfGroup(it1).map { it.toDto() } }
             val transactions =
-                group.id?.let { it1 -> transactionService.getTransactionsOfGroup(it1).map { it.toDto() } }
+                group.id?.let { it -> transactionService.getTransactionsOfGroup(it) }
+            val webTransactions: MutableList<WebTransactionDto> = mutableListOf()
+
+            transactions?.forEach{ t ->
+                val pNames: MutableList<String> = mutableListOf()
+                t.participants.forEach { p-> pNames.add(p.participant.name) }
+                webTransactions.add(WebTransactionDto(
+                    id = t.id,
+                    type = t.type,
+                    amount = t.amount,
+                    paidById = t.paidBy.id,
+                    paidByName = t.paidBy.name,
+                    createdAt = t.createdAt,
+                    participants = t.participants.map { it.toDto() },
+                    participantNames = pNames
+                ))
+            }
+
+            webTransactions.forEach { println(it.paidByName) }
 
             model.addAttribute("group", group.toDto())
             model.addAttribute("members", members)
-            model.addAttribute("transactions", transactions)
+            model.addAttribute("transactions", webTransactions.toList())
 
             "groups/group_detail"
         } catch (ex: ResponseStatusException) {
@@ -137,4 +172,50 @@ class WebController(
 
         return "redirect:/groups/${id}/settlement"
     }
+
+    // creates form for custom transaction
+    @GetMapping("/groups/{groupId}/transactions/create")
+    fun showTransactionForm(@PathVariable groupId: Long, model: Model): String {
+        val members = memberService.getMembersOfGroup(groupId).map { it.toDto() }
+        model.addAttribute("members", members)
+        model.addAttribute("groupId", groupId)
+
+        // Pre-populate a new TransactionDto with one empty participant
+        val newTransaction = TransactionDto(
+            id = null,
+            type = Transaction.TransactionType.PAYMENT,
+            amount = 0.0,
+            paidById = members.firstOrNull()?.id ?: 0L,
+            createdAt = null,
+            participants = mutableListOf(TransactionParticipantDto(id = null, percentage = 0.0))
+        )
+        model.addAttribute("newTransaction", newTransaction)
+        return "transactions/transaction_form"
+    }
+
+    @PostMapping("/groups/{groupId}/transactions/create")
+    fun createTransaction(
+        @PathVariable groupId: Long,
+        @ModelAttribute newTransaction: TransactionDto
+    ): String {
+        transactionService.createTransaction(newTransaction)
+        return "redirect:/groups/$groupId"
+    }
+
+    @GetMapping("/groups/{groupId}/transactions/edit/{transactionId}")
+    fun editTransaction(
+        @PathVariable groupId: Long,
+        @PathVariable transactionId: Long,
+        model: Model
+    ): String {
+        val transaction = transactionService.getTransaction(transactionId).toDto()
+        val members = memberService.getMembersOfGroup(groupId).map { it.toDto() }
+
+        model.addAttribute("newTransaction", transaction)
+        model.addAttribute("groupId", groupId)
+        model.addAttribute("members", members)
+
+        return "transactions/transaction_form"
+    }
+
 }
