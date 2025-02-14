@@ -114,7 +114,7 @@ class WebController(
     }
 
     // edit group with group_form
-    @GetMapping("/groups/edit/{id}")
+    @GetMapping("/groups/{id}/edit")
     fun editGroup(@PathVariable id: Long, model: Model): String {
         val group = groupService.getGroupById(id)
         model.addAttribute("group", group.toDto())
@@ -122,7 +122,7 @@ class WebController(
     }
 
     // delete and go to list
-    @PostMapping("/groups/delete/{id}")
+    @PostMapping("/groups/{id}/delete")
     fun removeGroup(@PathVariable id: Long): String {
         groupService.deleteGroup(id)
         return "redirect:/groups"
