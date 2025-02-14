@@ -22,16 +22,6 @@ class MemberService(
         HttpStatus.NOT_FOUND, "Member with ID $id not found"
     )
 
-    fun getMembers(ids: List<Long>): List<Member> {
-        val members = memberRepo.findAllById(ids)
-        if (members.size != ids.size) {
-            throw ResponseStatusException(
-                HttpStatus.NOT_FOUND, "One or more member IDs do not exist"
-            )
-        }
-        return members
-    }
-
     fun getMemberByEmail(email: String) = memberRepo.getMemberByEmail(email) ?: throw ResponseStatusException(
         HttpStatus.NOT_FOUND, "Email $email not found"
     )
@@ -40,7 +30,7 @@ class MemberService(
     fun createMember(memberDto: MemberDto): Member {
         if (memberDto.email.isBlank()) throw ResponseStatusException(
             HttpStatus.BAD_REQUEST,
-            "Email is required"
+            "Email is mandatory"
         )
         if (memberRepo.existsMemberByEmail(memberDto.email)) throw ResponseStatusException(
             HttpStatus.BAD_REQUEST, "Email already exists"
