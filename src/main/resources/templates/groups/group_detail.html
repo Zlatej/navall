@@ -10,6 +10,13 @@
 <p><strong>Name:</strong> <span th:text="${group.name}"></span></p>
 <p><strong>Currency:</strong> <span th:text="${group.currency}"></span></p>
 
+<h3>Actions</h3>
+<a th:href="@{'/groups/edit/' + ${group.id}}">Edit Group</a>
+<form th:action="@{'/groups/' + ${group.id} + '/delete'}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to remove this group?');">
+    <button type="submit">Remove Group</button>
+</form>
+<a th:href="@{'/groups/' + ${group.id} + '/settlement'}">Settle Up</a>
+
 <h2>Members</h2>
 <ul>
     <li th:each="member : ${members}" th:text="${member.name}"></li>

@@ -47,3 +47,9 @@ fun Transaction.toDto() = TransactionDto(
     participants = this.participants.map { participant -> participant.toDto() },
 )
 
+fun SettlementResponse.toTransactionDto() = TransactionDto(
+    type = Transaction.TransactionType.SETTLEMENT,
+    amount = this.amount,
+    paidById = this.paidById,
+    participants = this.participants
+)
