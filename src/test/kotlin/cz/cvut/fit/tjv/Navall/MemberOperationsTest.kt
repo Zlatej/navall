@@ -7,7 +7,6 @@ import cz.cvut.fit.tjv.Navall.models.dtos.MemberDto
 import cz.cvut.fit.tjv.Navall.models.dtos.TransactionDto
 import cz.cvut.fit.tjv.Navall.models.dtos.TransactionParticipantDto
 import jakarta.persistence.EntityManager
-import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -23,7 +22,6 @@ import kotlin.test.assertNotNull
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Transactional
 class MemberOperationsTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -51,7 +49,6 @@ class MemberOperationsTest {
             .contentAsString
 
         val createdGroupDto = objectMapper.readValue(response, GroupDto::class.java)
-
         assertNotNull(createdGroupDto.id)
 
         // ALICE
@@ -102,8 +99,7 @@ class MemberOperationsTest {
             content { contentType(MediaType.APPLICATION_JSON) }
         }.andReturn()
 
-        // CANNOT DELETE ALICE -> EXCEPTION
-        val deleteResponse = mockMvc.delete("/api/members/${createdMemberDtoAlice.id}") {
+        mockMvc.delete("/api/members/${createdMemberDtoAlice.id}") {
             contentType = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isBadRequest() }
