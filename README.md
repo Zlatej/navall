@@ -1,4 +1,5 @@
 # Navall
+*Semestral work for BI-TJV*
 
 Navall is a ledger for your group expenses. Simply add your expenses to the group, track your balance. And when you want
 to settle up the debts, Navall will suggest you the payments.
